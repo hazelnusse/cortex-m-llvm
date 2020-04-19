@@ -1,0 +1,5 @@
+: 1
+name: cortex-m-llvm
+version: 0.1.0-a.0.z
+summary: cortex-m-llvm C library
+license: proprietary

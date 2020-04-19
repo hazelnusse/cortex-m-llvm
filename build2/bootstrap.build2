@@ -1,0 +1,3 @@
+project = cortex-m-llvm
+
+using config

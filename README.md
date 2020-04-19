@@ -29,3 +29,19 @@ Next, add your sources to `src/*.c` or modify `Makefile` to include others direc
   - clang 6.0 or higher
   - llvm 6.0 or higher
   - lld 6.0 or higher
+
+
+# Build2 notes:
+First, install build2 following [these
+directions](https://build2.org/install.xhtml). Then, the root of this
+repository, initialize a clang configuration:
+
+$ bdep init -C @clang cc config.c=clang
+
+Note that this will create a directory `cortex-m-llvm-clang` next to this
+repository directory and set it as the default configuration. Next build it:
+
+$ b -v
+
+The resulting output files may be found in `cortex-m-llvm-clang/src`.
+

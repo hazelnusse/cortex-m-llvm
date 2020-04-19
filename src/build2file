@@ -1,0 +1,55 @@
+obje{*}:
+{
+# The following 5 options need to be controlled by a flag that selects
+# appropriately based on cortex-mX setting; see scripts/*.mk
+c.coptions += --target=thumbv7em-unknown-none-eabi
+c.coptions += -mthumb
+c.coptions += -march=armv7e-m
+c.coptions += -mcpu=cortex-m7
+c.coptions += -mfloat-abi=hard
+c.coptions += -mfpu=fpv5-sp-d16
+# This is needed to indicate we are in a free-standing instead of a hosted
+# environment
+c.coptions += -ffreestanding
+c.coptions += -Oz
+c.coptions += -std=c11
+c.coptions += -Wall
+c.coptions += -g3
+}
+
+exe{*}:
+{
+c.coptions += --target=thumbv7em-unknown-none-eabi
+c.coptions += -mthumb
+c.coptions += -march=armv7e-m
+c.coptions += -mcpu=cortex-m7
+c.coptions += -mfloat-abi=hard
+c.coptions += -mfpu=fpv5-sp-d16
+c.coptions += -ffreestanding
+c.coptions += -Oz
+c.coptions += -std=c11
+c.coptions += -Wall
+c.coptions += -g3
+# TODO: figure out how to clear out -L flags that are getting added
+# automatically
+c.libs =?
+c.loptions += -fuse-ld=lld
+c.loptions += -nostdlib
+#c.loptions += -nostartfiles
+c.loptions += -nodefaultlibs
+c.loptions += -v
+c.loptions += -Wl,--Bstatic
+c.loptions += -Wl,--build-id
+c.loptions += -Wl,--gc-sections
+}
+
+exe{llvm-project}: obje{start main}
+exe{llvm-project}: file{"$src_root/lib/link.ld"}: include = adhoc
+exe{llvm-project}:
+{
+  c.loptions += -Wl,-Map="$out_base/llvm-project.map"
+  c.loptions += -Wl,--script="$src_root/lib/link.ld"
+}
+
+obje{start}: c{start}
+obje{main}: c{main}

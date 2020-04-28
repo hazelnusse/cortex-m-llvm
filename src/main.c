@@ -1,3 +1,7 @@
+// TODO: abstract blinking an LED behind a suitable interface for
+// cross-compilatoin; in the case of a dev board, it should actually blink an
+// LED, in the case of a desktop build, it should probably print to screen
+// somehow.
 #define VADDR(addr) (*((volatile unsigned int*)addr))
 #define OUT         VADDR(0xDEADBEEF)
 #define INP         VADDR(0xCAFEBABE)
